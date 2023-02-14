@@ -1,0 +1,21 @@
+SELECT c.case_id AS id, c.primary_road AS road, c.intersection,
+    c.side_of_highway, c.collision_severity AS severity, c.type_of_collision AS type, c.pedestrian_collision AS pedestrian,
+    c.bicycle_collision AS bicycle, c.motorcycle_collision AS motorcycle, c.truck_collision AS truck,
+    d.same_day_crashes, r.same_road_crashes, c.latitude, c.longitude, c.collision_date || ' ' || c.collision_time AS datetime
+FROM collisions AS c
+LEFT JOIN (SELECT COUNT(*) AS same_day_crashes, collision_date
+FROM collisions
+WHERE latitude BETWEEN 33.859956 AND 34.109378
+AND longitude BETWEEN -118.485764 AND -118.036371
+GROUP BY collision_date) AS d
+ON d.collision_date = c.collision_date
+LEFT JOIN (SELECT COUNT(*) AS same_road_crashes, primary_road
+FROM collisions
+WHERE latitude BETWEEN 33.859956 AND 34.109378
+AND longitude BETWEEN -118.485764 AND -118.036371
+GROUP BY primary_road) AS r
+ON r.primary_road = c.primary_road
+WHERE c.latitude BETWEEN 33.859956 AND 34.109378
+AND c.longitude BETWEEN -118.485764 AND -118.036371
+ORDER BY c.collision_date DESC;
+
