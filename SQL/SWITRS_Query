@@ -1,4 +1,4 @@
-SELECT c.case_id AS id, c.primary_road AS road, c.intersection,
+SELECT c.case_id AS id, c.primary_road AS primary_road, c.secondary_road AS secondary_road, c.intersection,
     c.side_of_highway, c.collision_severity AS severity, c.type_of_collision AS type, c.pedestrian_collision AS pedestrian,
     c.bicycle_collision AS bicycle, c.motorcycle_collision AS motorcycle, c.truck_collision AS truck,
     d.same_day_crashes, r.same_road_crashes, c.latitude, c.longitude, c.collision_date || ' ' || c.collision_time AS datetime
